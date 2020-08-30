@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addTask } from "../../redux/action";
+import { addTask, archiveTasks } from "../../redux/action";
 import "./InputField.scss";
 
 class InputField extends Component {
@@ -18,6 +18,7 @@ class InputField extends Component {
     this.setState({ taskId });
     if (this.state.taskDescription) {
       this.props.addTask(this.state);
+      this.props.archiveTasks(false);
       this.setState({ taskDescription: "" });
     } else {
       alert("Please type in your task name before submit");
@@ -45,5 +46,5 @@ export default connect(
   (state) => ({
     tasks: state.tasks,
   }),
-  { addTask }
+  { addTask, archiveTasks }
 )(InputField);

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { completeTask } from "../../../redux/action";
+import { completeTask, archiveTasks } from "../../../redux/action";
 import "./TaskItem.scss";
 
 class TaskItem extends Component {
   constructor(props) {
-    super(props);
+    super();
   }
 
   render() {
@@ -18,6 +18,7 @@ class TaskItem extends Component {
           }
           onClick={() => {
             this.props.completeTask(this.props.task);
+            this.props.archiveTasks(false);
           }}
         />
         <div>{taskDescription}</div>
@@ -26,4 +27,4 @@ class TaskItem extends Component {
   }
 }
 
-export default connect(() => ({}), { completeTask })(TaskItem);
+export default connect(() => ({}), { completeTask, archiveTasks })(TaskItem);

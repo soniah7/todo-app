@@ -28,14 +28,25 @@ class TaskList extends Component {
           tasks.task_to_complete.taskId !==
             prevProps.tasks.task_to_complete.taskId
         ) {
-          // const { taskList } = this.state;
-          // const taskList = Array.from(this.state.taskList);
-          var taskList = JSON.parse(JSON.stringify(this.state.taskList));
+          let taskList = JSON.parse(JSON.stringify(this.state.taskList));
           taskList.forEach((task) => {
             if (task.taskId === tasks.task_to_complete.taskId) {
               task.taskCompletionStatus = true;
             }
           });
+          this.setState({ taskList });
+        }
+      }
+      if (tasks.archive_tasks) {
+        if (
+          !prevProps.tasks ||
+          (tasks.archive_tasks && !prevProps.tasks.archive_tasks)
+        ) {
+          let taskList = JSON.parse(JSON.stringify(this.state.taskList));
+          taskList = taskList.filter((task) => {
+            return !task.taskCompletionStatus;
+          });
+          
           this.setState({ taskList });
         }
       }

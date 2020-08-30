@@ -10,6 +10,7 @@ export const completeTask = (task_to_complete) => ({
   task_to_complete,
 });
 
-export const archiveTasks = (task) => ({
+export const archiveTasks = (option) => ({
   type: ARCHIVE_TASKS,
+  option,
 });
