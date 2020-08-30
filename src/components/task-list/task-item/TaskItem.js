@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { completeTask } from "../../../redux/action";
 import "./TaskItem.scss";
 
 class TaskItem extends Component {
   constructor(props) {
-    super();
+    super(props);
   }
 
   render() {
@@ -14,6 +16,9 @@ class TaskItem extends Component {
           className={
             taskCompletionStatus ? "check-box check-box--ticked" : "check-box"
           }
+          onClick={() => {
+            this.props.completeTask(this.props.task);
+          }}
         />
         <div>{taskDescription}</div>
       </div>
@@ -21,4 +26,4 @@ class TaskItem extends Component {
   }
 }
 
-export default TaskItem;
+export default connect(() => ({}), { completeTask })(TaskItem);
