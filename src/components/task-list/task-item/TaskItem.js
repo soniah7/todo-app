@@ -14,14 +14,24 @@ class TaskItem extends Component {
       <div className="task-item">
         <div
           className={
-            taskCompletionStatus ? "check-box check-box--ticked" : "check-box"
+            taskCompletionStatus
+              ? "task-item__checkbox task-item__checkbox--ticked"
+              : "task-item__checkbox"
           }
           onClick={() => {
             this.props.completeTask(this.props.task);
             this.props.archiveTasks(false);
           }}
         />
-        <div>{taskDescription}</div>
+        <div
+          className={
+            taskCompletionStatus
+              ? "task-item__description--completed"
+              : "task-item__description"
+          }
+        >
+          {taskDescription}
+        </div>
       </div>
     );
   }
