@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import TaskItem from "./task-item/TaskItem.js";
 
 class TaskList extends Component {
@@ -7,28 +8,45 @@ class TaskList extends Component {
     this.state = {
       taskList: [
         {
-          id: 0,
-          description: "first sample task",
-          completionStatus: false,
+          taskId: 0,
+          taskDescription: "first sample task",
+          taskCompletionStatus: false,
         },
         {
-          id: 2,
-          description: "second sample task",
-          completionStatus: true,
+          taskId: 2,
+          taskDescription: "second sample task",
+          taskCompletionStatus: true,
         },
       ],
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const { tasks } = this.props;
+    if (
+      !prevProps.tasks.task_to_add ||
+      tasks.task_to_add.taskId !== prevProps.tasks.task_to_add.taskId
+    ) {
+      const taskList = [...this.state.taskList, tasks.task_to_add];
+      this.setState({ taskList });
+    }
+  }
+
   render() {
+    const { taskList } = this.state;
     return (
       <div>
-        {this.state.taskList.map((task) => (
-          <TaskItem task={task} />
+        {taskList.map((task, index) => (
+          <TaskItem id={index} task={task} />
         ))}
       </div>
     );
   }
 }
 
-export default TaskList;
+export default connect(
+  (state) => ({
+    tasks: state.tasks,
+  }),
+  {}
+)(TaskList);

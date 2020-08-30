@@ -7,15 +7,15 @@ class TaskItem extends Component {
   }
 
   render() {
-    const { description, completionStatus } = this.props.task;
+    const { taskDescription, taskCompletionStatus } = this.props.task;
     return (
       <div className="task-item">
         <div
           className={
-            completionStatus ? "check-box check-box--ticked" : "check-box"
+            taskCompletionStatus ? "check-box check-box--ticked" : "check-box"
           }
         />
-        <div>{description}</div>
+        <div>{taskDescription}</div>
       </div>
     );
   }
