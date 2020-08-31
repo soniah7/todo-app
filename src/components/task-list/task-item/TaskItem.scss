@@ -1,32 +1,38 @@
 .task-item {
   font-size: 0.8rem;
   display: flex;
-  div {
-    margin: 0px 5px;
-  }
   margin: 5px;
-}
 
-.check-box {
-  width: 0.8rem;
-  height: 0.8rem;
-  border: black solid 1px;
-  border-radius: 15%;
+  &__checkbox {
+    width: 0.8rem;
+    height: 0.8rem;
+    border: black solid 1px;
+    border-radius: 15%;
 
-  //draw the tick icon with pure css
-  &--ticked {
-    position: relative;
-    &:after {
-      content: "";
-      height: 0.8rem;
-      width: 0.4rem;
-      border-top: 1px solid black;
-      border-right: 1px solid black;
-      transform: scaleX(-1) rotate(145deg);
-      position: absolute;
-      left: 0.1rem;
-      top: 0.5rem;
-      transform-origin: left top;
+    //draw the tick icon with pure css
+    &--ticked {
+      position: relative;
+      &:after {
+        content: "";
+        height: 0.8rem;
+        width: 0.4rem;
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+        transform: scaleX(-1) rotate(145deg);
+        position: absolute;
+        left: 0.1rem;
+        top: 0.5rem;
+        transform-origin: left top;
+      }
+    }
+  }
+
+  &__description {
+    margin: 0px 5px;
+    &--completed {
+      margin: 0px 5px;
+      font-style: italic;
+      text-decoration: line-through;
     }
   }
 }
