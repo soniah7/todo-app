@@ -9,21 +9,24 @@ class TasksStore {
 
   @action
   completeTask = (task_to_complete) => {
-    this.taskList.forEach((task) => {
-      if (task_to_complete.taskId === task.taskId) {
-        task.taskCompletionStatus = true;
+    this.taskList.forEach((taskItem) => {
+      if (task_to_complete.taskId === taskItem.taskId) {
+        taskItem.taskCompletionStatus = true;
       }
     });
   };
 
   @action
   archiveTasks = () => {
-    this.taskList = this.taskList.filter((task) => !task.taskCompletionStatus);
+    this.taskList = this.taskList.filter(
+      (taskItem) => !taskItem.taskCompletionStatus
+    );
   };
 
   @computed
   get remainingCount() {
-    return this.taskList.filter((task) => !task.taskCompletionStatus).length;
+    return this.taskList.filter((taskItem) => !taskItem.taskCompletionStatus)
+      .length;
   }
 
   @computed

@@ -1,24 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { inject, observer } from "mobx-react";
 import TaskItem from "./task-item/TaskItem.js";
 
-@inject("TasksStore")
-@observer
-class TaskList extends Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    const { TasksStore } = this.props;
-    return (
-      <div>
-        {TasksStore.taskList.map((task, index) => (
-          <TaskItem key={index} task={task} />
-        ))}
-      </div>
-    );
-  }
-}
-
+const TaskList = inject("TasksStore")(
+  observer(({ TasksStore }) => (
+    <div>
+      {TasksStore.taskList.map((taskItem, index) => (
+        <TaskItem key={index} taskItem={taskItem} />
+      ))}
+    </div>
+  ))
+);
 export default TaskList;

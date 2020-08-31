@@ -1,23 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import { inject, observer } from "mobx-react";
 import "./CompletionStatus.scss";
 
-@inject("TasksStore")
-@observer
-class CompletionStatus extends Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    const { remainingCount, totalCount } = this.props.TasksStore;
+const CompletionStatus = inject("TasksStore")(
+  observer(({ TasksStore }) => {
+    const { remainingCount, totalCount } = TasksStore;
     return (
       <div className="completion-status">
         <strong>{remainingCount}</strong> of
         <strong> {totalCount}</strong> remaining [
         <span
           onClick={() => {
-            this.props.TasksStore.archiveTasks();
+            TasksStore.archiveTasks();
           }}
         >
           archive
@@ -25,7 +19,6 @@ class CompletionStatus extends Component {
         ]
       </div>
     );
-  }
-}
-
+  })
+);
 export default CompletionStatus;

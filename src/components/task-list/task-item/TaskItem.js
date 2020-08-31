@@ -1,17 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { inject, observer } from "mobx-react";
 import "./TaskItem.scss";
 
-@inject("TasksStore")
-@observer
-class TaskItem extends Component {
-  constructor(props) {
-    super();
-  }
-
-  render() {
-    const { taskDescription, taskCompletionStatus } = this.props.task;
-    const { TasksStore } = this.props;
+const TaskItem = inject("TasksStore")(
+  observer(({ TasksStore, taskItem }) => {
+    const { taskDescription, taskCompletionStatus } = taskItem;
     return (
       <div className="task-item">
         <div
@@ -21,7 +14,7 @@ class TaskItem extends Component {
               : "task-item__checkbox"
           }
           onClick={() => {
-            TasksStore.completeTask(this.props.task);
+            TasksStore.completeTask(taskItem);
           }}
         />
         <div
@@ -35,7 +28,7 @@ class TaskItem extends Component {
         </div>
       </div>
     );
-  }
-}
+  })
+);
 
 export default TaskItem;

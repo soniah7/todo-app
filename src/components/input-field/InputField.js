@@ -1,48 +1,39 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { inject, observer } from "mobx-react";
 import "./InputField.scss";
 
-@inject("TasksStore")
-@observer
-class InputField extends Component {
-  constructor() {
-    super();
-    this.state = {
-      taskDescription: "",
+const InputField = inject("TasksStore")(
+  observer(({ TasksStore }) => {
+    const [taskDescription, setTaskDescription] = useState("");
+    const [taskId, setTaskId] = useState(0);
+
+    const handleSubmit = () => {
+      if (!taskDescription) {
+        alert("Please type in your task name before submit");
+      } else {
+        const task = {
+          taskId,
+          taskDescription,
+          taskCompletionStatus: false,
+        };
+        TasksStore.addTask(task);
+        setTaskDescription("");
+        setTaskId(taskId + 1);
+      }
     };
-    this.id = 0;
-  }
 
-  handleSubmit = (e) => {
-    const { TasksStore } = this.props;
-    if (!this.state.taskDescription) {
-      alert("Please type in your task name before submit");
-    } else {
-      const task = {
-        taskId: this.id++,
-        taskDescription: this.state.taskDescription,
-        taskCompletionStatus: false,
-      };
-      TasksStore.addTask(task);
-      this.setState({ taskDescription: "" });
-    }
-  };
-
-  render() {
     return (
       <div className="input-field">
         <input
           onChange={(e) => {
-            this.setState({
-              taskDescription: e.target.value,
-            });
+            setTaskDescription(e.target.value);
           }}
-          value={this.state.taskDescription}
+          value={taskDescription}
         />
-        <button onClick={this.handleSubmit}>add</button>
+        <button onClick={handleSubmit}>add</button>
       </div>
     );
-  }
-}
+  })
+);
 
 export default InputField;
