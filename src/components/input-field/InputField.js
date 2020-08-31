@@ -1,27 +1,30 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { addTask, archiveTasks } from "../../redux/action";
+import { inject, observer } from "mobx-react";
 import "./InputField.scss";
 
+@inject("TasksStore")
+@observer
 class InputField extends Component {
   constructor() {
     super();
     this.state = {
-      taskId: 0,
       taskDescription: "",
-      taskCompletionStatus: false,
     };
+    this.id = 0;
   }
 
   handleSubmit = (e) => {
-    if (this.state.taskDescription) {
-      const taskId = this.state.taskId + 1;
-      this.setState({ taskId });
-      this.props.addTask(this.state);
-      this.props.archiveTasks(false);
-      this.setState({ taskDescription: "" });
-    } else {
+    const { TasksStore } = this.props;
+    if (!this.state.taskDescription) {
       alert("Please type in your task name before submit");
+    } else {
+      const task = {
+        taskId: this.id++,
+        taskDescription: this.state.taskDescription,
+        taskCompletionStatus: false,
+      };
+      TasksStore.addTask(task);
+      this.setState({ taskDescription: "" });
     }
   };
 
@@ -42,9 +45,4 @@ class InputField extends Component {
   }
 }
 
-export default connect(
-  (state) => ({
-    tasks: state.tasks,
-  }),
-  { addTask, archiveTasks }
-)(InputField);
+export default InputField;

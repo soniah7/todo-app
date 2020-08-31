@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { completeTask, archiveTasks } from "../../../redux/action";
+import { inject, observer } from "mobx-react";
 import "./TaskItem.scss";
 
+@inject("TasksStore")
+@observer
 class TaskItem extends Component {
   constructor(props) {
     super();
@@ -10,6 +11,7 @@ class TaskItem extends Component {
 
   render() {
     const { taskDescription, taskCompletionStatus } = this.props.task;
+    const { TasksStore } = this.props;
     return (
       <div className="task-item">
         <div
@@ -19,8 +21,7 @@ class TaskItem extends Component {
               : "task-item__checkbox"
           }
           onClick={() => {
-            this.props.completeTask(this.props.task);
-            this.props.archiveTasks(false);
+            TasksStore.completeTask(this.props.task);
           }}
         />
         <div
@@ -37,4 +38,4 @@ class TaskItem extends Component {
   }
 }
 
-export default connect(() => ({}), { completeTask, archiveTasks })(TaskItem);
+export default TaskItem;
