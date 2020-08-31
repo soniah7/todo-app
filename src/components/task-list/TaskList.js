@@ -42,11 +42,11 @@ class TaskList extends Component {
           !prevProps.tasks ||
           (tasks.archive_tasks && !prevProps.tasks.archive_tasks)
         ) {
+          // deep copy taskList stored in state and then generate a new taskList without completed tasks
           let taskList = JSON.parse(JSON.stringify(this.state.taskList));
           taskList = taskList.filter((task) => {
             return !task.taskCompletionStatus;
           });
-          
           this.setState({ taskList });
         }
       }

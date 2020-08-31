@@ -14,9 +14,9 @@ class InputField extends Component {
   }
 
   handleSubmit = (e) => {
-    const taskId = this.state.taskId + 1;
-    this.setState({ taskId });
     if (this.state.taskDescription) {
+      const taskId = this.state.taskId + 1;
+      this.setState({ taskId });
       this.props.addTask(this.state);
       this.props.archiveTasks(false);
       this.setState({ taskDescription: "" });
